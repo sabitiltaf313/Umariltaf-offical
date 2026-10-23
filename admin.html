@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ایڈمن پینل - عمر الطاف</title>
+<style>
+*{box-sizing:border-box;font-family:Arial} body{margin:0;background:#f1f1f1}
+.header{background:#000;color:#fff;padding:15px;text-align:center;font-size:20px}
+.container{max-width:700px;margin:auto;padding:10px}
+.card{background:white;padding:15px;border-radius:12px;margin-bottom:10px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+.stat{display:flex;gap:10px} .stat div{flex:1;background:#000;color:white;padding:15px;border-radius:10px;text-align:center}
+.stat div.green{background:#25D366} .stat div.yellow{background:#ff9800}
+input,select{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:8px}
+button{width:100%;padding:12px;background:black;color:white;border:none;border-radius:8px;margin-top:5px;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:13px} th,td{border:1px solid #ddd;padding:8px;text-align:center} th{background:black;color:white}
+</style>
+</head>
+<body>
+<div class="header">ایڈمن پینل - عمر الطاف آفیشل</div>
+<div class="container">
+<div class="stat">
+<div><h2 id="totalOrders">0</h2><p>کل آرڈرز</p></div>
+<div class="green"><h2>1600</h2><p>قیمت</p></div>
+<div class="yellow"><h2 id="totalAff">0</h2><p>ایفلی ایٹ</p></div>
+</div>
+
+<div class="card">
+<h3>➕ نیا پروڈکٹ شامل کریں</h3>
+<input id="pname" placeholder="پروڈکٹ نام">
+<input id="pprice" placeholder="قیمت 1600" value="1600">
+<input id="pimg" placeholder="تصویر کا لنک">
+<button onclick="addProduct()">پروڈکٹ ایڈ کریں</button>
+</div>
+
+<div class="card">
+<h3>📦 تمام آرڈرز (آٹومیٹک)</h3>
+<div style="overflow:auto"><table><thead><tr><th>نام</th><th>فون</th><th>پروڈکٹ</th><th>جاز کیش</th><th>تاریخ</th></tr></thead><tbody id="orderList"></tbody></table></div>
+<button style="background:red;margin-top:10px" onclick="clearAll()">تمام آرڈرز ڈیلیٹ کریں</button>
+</div>
+
+<div class="card">
+<h3>👥 ایفلی ایٹ لسٹ</h3>
+<div id="affList">کوئی ایفلی ایٹ نہیں</div>
+</div>
+
+<a href="index.html"><button style="background:white;color:black;border:1px solid black">ہوم پیج پر واپس</button></a>
+</div>
+
+<script>
+function load(){
+let orders=JSON.parse(localStorage.getItem('orders')||'[]');
+document.getElementById('totalOrders').innerText=orders.length;
+let html="";
+orders.forEach(o=>{
+html+=`<tr><td>${o.name}</td><td>${o.phone}</td><td>${o.product}</td><td>${o.jazz||'-'}</td><td>${o.date}</td></tr>`;
+});
+document.getElementById('orderList').innerHTML=html||'<tr><td colspan=5>کوئی آرڈر نہیں</td></tr>';
+
+let aff=JSON.parse(localStorage.getItem('affiliates')||'[]');
+document.getElementById('totalAff').innerText=aff.length;
+let affHtml="";
+aff.forEach(a=>{affHtml+=`<p>نام: ${a.name} | کوڈ: ${a.code} | کمیشن: ${a.earn||0} روپے</p><hr>`});
+document.getElementById('affList').innerHTML=affHtml||'کوئی ایفلی ایٹ نہیں';
+}
+function addProduct(){
+let n=document.getElementById('pname').value;
+if(!n){alert('نام لکھیں');return;}
+let prods=JSON.parse(localStorage.getItem('myProducts')||'[]');
+prods.push({name:n,price:document.getElementById('pprice').value,img:document.getElementById('pimg').value||'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500'});
+localStorage.setItem('myProducts',JSON.stringify(prods));
+alert('پروڈکٹ ایڈ ہو گیا!');
+}
+function clearAll(){if(confirm('کیا آپ سب ڈیلیٹ کرنا چاہتے ہیں؟')){localStorage.removeItem('orders');location.reload();}}
+load();
+</script>
+</body>
+</html>
