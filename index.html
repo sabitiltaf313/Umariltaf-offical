@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عمر الطاف اسٹور</title>
+<style>
+*{box-sizing:border-box;font-family:Arial} body{margin:0;background:#f2f2f2}
+.header{background:#000;color:#fff;padding:15px;text-align:center;font-size:24px;position:sticky;top:0;z-index:10}
+.container{max-width:600px;margin:auto;padding:15px}
+.product{background:white;border-radius:15px;padding:15px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.product img{width:100%;border-radius:10px;height:250px;object-fit:cover}
+.product h3{margin:10px 0 5px 0}
+.price{color:green;font-size:20px;font-weight:bold}
+.old-price{color:gray;text-decoration:line-through;font-size:14px;margin-right:10px}
+.btn{width:100%;padding:12px;background:black;color:white;border:none;border-radius:10px;margin-top:10px;font-size:16px;cursor:pointer}
+.btn-green{background:#25D366}
+input{width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px}
+.cart{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:black;color:white;padding:12px 20px;border-radius:30px;display:none}
+</style>
+</head>
+<body>
+<div class="header">عمر الطاف اسٹور - قیمت 1600 روپے</div>
+<div class="container">
+<div class="product">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500">
+<h3>پریمیم ٹی شرٹ - بلیک</h3>
+<p><span class="old-price">2000</span> <span class="price">1600 روپے</span></p>
+<p style="font-size:12px;color:gray">سیلر منافع: 1400 روپے | اسٹور کمیشن: 200 روپے</p>
+<button class="btn" onclick="addToCart('ٹی شرٹ')">کارٹ میں ڈالیں</button>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500">
+<h3>اسپورٹس شوز</h3>
+<p><span class="price">1600 روپے</span></p>
+<button class="btn" onclick="addToCart('شوز')">کارٹ میں ڈالیں</button>
+</div>
+
+<div class="product" style="text-align:center">
+<h3>آرڈر فارم</h3>
+<input id="name" placeholder="آپ کا نام">
+<input id="phone" placeholder="فون نمبر">
+<input id="address" placeholder="مکمل پتہ">
+<input id="jazz" placeholder="جاز کیش نمبر (ادائیگی کے لیے)">
+<button class="btn btn-green" onclick="placeOrder()">آرڈر کنفرم کریں</button>
+<button class="btn" style="background:white;color:black;border:1px solid black;margin-top:10px" onclick="copyLink()">🔗 لنک کاپی کریں</button>
+<p style="font-size:11px;margin-top:10px;word-break:break-all">https://sabitiltaf313.github.io/Umariltafstore23/</p>
+<a href="auth.html"><button class="btn" style="background:#eee;color:black">لاگ ان / سائن اپ</button></a>
+</div>
+</div>
+
+<div class="cart" id="cart">1 چیز کارٹ میں ہے</div>
+
+<script>
+let cartCount=0;
+function addToCart(p){
+cartCount++;
+document.getElementById('cart').style.display='block';
+document.getElementById('cart').innerText= p + ' کارٹ میں شامل ہو گیا';
+setTimeout(()=>{document.getElementById('cart').style.display='none'},2000);
+}
+function placeOrder(){
+let n=document.getElementById('name').value;
+if(n==""){alert('نام لکھیں');return;}
+alert('شکریہ '+n+'! آپ کا 1600 والا آرڈر موصول ہو گیا۔');
+}
+function copyLink(){
+navigator.clipboard.writeText('https://sabitiltaf313.github.io/Umariltafstore23/');
+alert('لنک کاپی ہو گیا!');
+}
+</script>
+</body>
+</html>
