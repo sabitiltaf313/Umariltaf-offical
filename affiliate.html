@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ایفلی ایٹ ڈیش بورڈ</title>
+<style>
+*{box-sizing:border-box;font-family:Arial} body{margin:0;background:#f1f1f1}
+.header{background:#000;color:white;padding:15px;text-align:center}
+.container{max-width:600px;margin:auto;padding:10px}
+.card{background:white;padding:15px;border-radius:12px;margin-bottom:10px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+.stat{display:flex;gap:10px} .stat div{flex:1;padding:15px;border-radius:10px;text-align:center;color:white}
+.green{background:#25D366} .black{background:#000} .orange{background:#ff9800}
+input{width:100%;padding:12px;margin:5px 0;border:1px solid #ccc;border-radius:8px}
+button{width:100%;padding:12px;background:black;color:white;border:none;border-radius:8px;margin-top:5px;cursor:pointer}
+.linkBox{background:#eee;padding:10px;border-radius:8px;word-break:break-all;text-align:center;border:1px dashed black}
+</style>
+</head>
+<body>
+<div class="header">ایفلی ایٹ ڈیش بورڈ - عمر الطاف</div>
+<div class="container">
+<div class="stat">
+<div class="black"><h2 id="myCode">AFF1234</h2><p>آپ کا کوڈ</p></div>
+<div class="green"><h2 id="myEarn">0</h2><p>کل کمائی (1400 فی سیل)</p></div>
+<div class="orange"><h2 id="mySales">0</h2><p>کل سیلز</p></div>
+</div>
+
+<div class="card">
+<h3>🔗 آپ کا ریفرل لنک</h3>
+<div class="linkBox" id="refLink">https://sabitiltaf313.github.io/Umariltaf-offical/?ref=AFF1234</div>
+<button onclick="copyRef()">لنک کاپی کریں</button>
+<button style="background:#25D366" onclick="shareWhatsApp()">واٹس ایپ پر شیئر کریں</button>
+<p style="font-size:12px;color:gray;margin-top:10px">جب کوئی آپ کے لنک سے 1600 والا آرڈر کرے گا تو آپ کو 1400 روپے ملیں گے، اسٹور کو 200 روپے۔</p>
+</div>
+
+<div class="card">
+<h3>📦 میری سیلز</h3>
+<table style="width:100%;border-collapse:collapse"><tr style="background:black;color:white"><th>کسٹمر</th><th>پروڈکٹ</th><th>کمیشن</th></tr><tbody id="myOrders"></tbody></table>
+</div>
+
+<div class="card">
+<h3>💸 جاز کیش نکالنے کی درخواست</h3>
+<input id="jazzNum" placeholder="اپنا جاز کیش نمبر لکھیں">
+<input id="amount" placeholder="رقم (کم از کم 1000)">
+<button class="green" style="background:#25D366" onclick="withdraw()">نکالنے کی درخواست بھیجیں</button>
+</div>
+
+<a href="index.html"><button style="background:white;color:black;border:1px solid black">ہوم پر واپس</button></a>
+</div>
+
+<script>
+let params=new URLSearchParams(window.location.search);
+let code=params.get('code')||JSON.parse(localStorage.getItem('currentUser')||'{}').code||'AFF1234';
+document.getElementById('myCode').innerText=code;
+let link=`https://sabitiltaf313.github.io/Umariltaf-offical/?ref=${code}`;
+document.getElementById('refLink').innerText=link;
+
+function copyRef(){navigator.clipboard.writeText(link);alert('لنک کاپی ہو گیا!');}
+function shareWhatsApp(){let msg=`میرے اسٹور سے خریدیں - قیمت صرف 1600 روپے! ${link}`;window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);}
+function withdraw(){let j=document.getElementById('jazzNum').value;let a=document.getElementById('amount').value;if(!j||!a){alert('نمبر اور رقم لکھیں');return;}alert('درخواست بھیج دی گئی ہے! رقم 24 گھنٹے میں آپ کے ${j} پر آ جائے گی۔');}
+
+let orders=JSON.parse(localStorage.getItem('orders')||'[]').filter(o=>o.ref==code);
+document.getElementById('mySales').innerText=orders.length;
+document.getElementById('myEarn').innerText=orders.length*1400;
+let html="";
+orders.forEach(o=>{html+=`<tr><td>${o.name}</td><td>${o.product}</td><td>1400</td></tr>`});
+document.getElementById('myOrders').innerHTML=html||'<tr><td colspan=3>ابھی کوئی سیل نہیں</td></tr>';
+</script>
+</body>
+</html>
