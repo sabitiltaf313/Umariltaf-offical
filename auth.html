@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لاگ ان / سائن اپ - عمر الطاف آفیشل</title>
+<style>
+*{box-sizing:border-box;font-family:Arial} 
+body{margin:0;background:#f2f2f2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:10px}
+.card{background:white;width:100%;max-width:450px;padding:20px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.1)}
+h2{text-align:center;margin-bottom:5px} .small{text-align:center;color:gray;font-size:13px;margin-bottom:15px}
+.tab{display:flex;gap:5px;background:#eee;padding:5px;border-radius:10px;margin-bottom:15px}
+.tab button{flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer;background:transparent}
+.tab button.active{background:black;color:white}
+label{font-size:13px;font-weight:bold;display:block;margin-top:10px}
+input,select{width:100%;padding:12px;margin:4px 0 8px 0;border:1px solid #ccc;border-radius:8px;font-size:14px}
+.row{display:flex;gap:8px} .row>div{flex:1}
+button.main{width:100%;padding:13px;background:black;color:white;border:none;border-radius:10px;margin-top:10px;font-size:16px;cursor:pointer}
+button.green{background:#25D366} .divider{text-align:center;margin:10px 0;color:gray;font-size:12px}
+.error{color:red;font-size:12px;display:none} .success{color:green;font-size:13px;text-align:center;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>عمر الطاف آفیشل اسٹور</h2>
+<p class="small">قیمت 1600 | سیلر 1400 + اسٹور 200</p>
+
+<div class="tab">
+<button id="loginTab" class="active" onclick="showLogin()">لاگ ان</button>
+<button id="signupTab" onclick="showSignup()">سائن اپ</button>
+</div>
+
+<!-- LOGIN BOX -->
+<div id="loginBox">
+<label>ای میل / فون نمبر / ایفلی ایٹ کوڈ</label>
+<input id="l_id" placeholder="مثال: umar@gmail.com یا AFF1234">
+<label>پاس ورڈ</label>
+<input id="l_pass" type="password" placeholder="پاس ورڈ لکھیں">
+<div style="text-align:left"><a href="#" style="font-size:12px" onclick="alert('ایڈمن سے رابطہ کریں: 0300-XXXXXXX')">پاس ورڈ بھول گئے؟</a></div>
+<button class="main" onclick="doLogin()">لاگ ان کریں</button>
+<div class="divider">ایڈمن لاگ ان: admin / 12345</div>
+<p id="l_msg" class="success"></p>
+</div>
+
+<!-- SIGNUP BOX -->
+<div id="signupBox" style="display:none">
+<div class="row">
+<div><label>پورا نام *</label><input id="s_name" placeholder="عمر الطاف"></div>
+<div><label>فون نمبر *</label><input id="s_phone" placeholder="0300-1234567"></div>
+</div>
+<label>ای میل *</label>
+<input id="s_email" type="email" placeholder="umar@gmail.com">
+<div class="row">
+<div><label>پاس ورڈ *</label><input id="s_pass" type="password" placeholder="کم از کم 6 حرف"></div>
+<div><label>کنفرم پاس ورڈ *</label><input id="s_cpass" type="password" placeholder="دوبارہ پاس ورڈ"></div>
+</div>
+<label>اکاؤنٹ کی قسم *</label>
+<select id="s_role" onchange="roleChange()"><option value="customer">کسٹمر - خریداری کے لیے</option><option value="affiliate">ایفلی ایٹ / سیلر - 1400 کمانے کے لیے</option></select>
+
+<div id="affExtra" style="display:none;background:#f9f9f9;padding:10
