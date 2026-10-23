@@ -1,73 +1,108 @@
 <!DOCTYPE html>
 <html lang="ur" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>عمر الطاف اسٹور</title>
 <style>
-*{box-sizing:border-box;font-family:Arial} body{margin:0;background:#f2f2f2}
-.header{background:#000;color:#fff;padding:15px;text-align:center;font-size:24px;position:sticky;top:0;z-index:10}
-.container{max-width:600px;margin:auto;padding:15px}
-.product{background:white;border-radius:15px;padding:15px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.product img{width:100%;border-radius:10px;height:250px;object-fit:cover}
-.product h3{margin:10px 0 5px 0}
-.price{color:green;font-size:20px;font-weight:bold}
-.old-price{color:gray;text-decoration:line-through;font-size:14px;margin-right:10px}
-.btn{width:100%;padding:12px;background:black;color:white;border:none;border-radius:10px;margin-top:10px;font-size:16px;cursor:pointer}
-.btn-green{background:#25D366}
-input{width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px}
-.cart{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:black;color:white;padding:12px 20px;border-radius:30px;display:none}
+*{box-sizing:border-box;font-family:system-ui}body{margin:0;background:#f2f2f2}
+.container{max-width:500px;margin:auto;padding:15px}
+.card{background:#fff;padding:20px;border-radius:18px;margin-top:20px;box-shadow:0 8px 25px rgba(0,0,0,.08)}
+input,select{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-radius:12px;font-size:15px}
+.btn{width:100%;padding:14px;background:#000;color:#fff;border:none;border-radius:12px;font-size:16px;margin-top:10px;cursor:pointer}
+.tabs{display:flex;background:#eee;border-radius:12px;padding:4px;margin:15px 0}
+.tabs button{flex:1;padding:11px;border:none;border-radius:10px;cursor:pointer}
+.tabs button.active{background:#000;color:#fff}
 </style>
 </head>
 <body>
-<div class="header">عمر الطاف اسٹور - قیمت 1600 روپے</div>
 <div class="container">
-<div class="product">
-<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500">
-<h3>پریمیم ٹی شرٹ - بلیک</h3>
-<p><span class="old-price">2000</span> <span class="price">1600 روپے</span></p>
-<p style="font-size:12px;color:gray">سیلر منافع: 1400 روپے | اسٹور کمیشن: 200 روپے</p>
-<button class="btn" onclick="addToCart('ٹی شرٹ')">کارٹ میں ڈالیں</button>
+<div class="card" style="text-align:center">
+<h2>عمر الطاف آفیشل اسٹور</h2>
+<p style="color:gray">قیمت 1600 | سیلر 1400 + اسٹور 200</p>
+
+<div class="tabs">
+<button id="t1" class="active" onclick="showTab('login')">لاگ ان</button>
+<button id="t2" onclick="showTab('signup')">سائن اپ</button>
 </div>
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500">
-<h3>اسپورٹس شوز</h3>
-<p><span class="price">1600 روپے</span></p>
-<button class="btn" onclick="addToCart('شوز')">کارٹ میں ڈالیں</button>
+<div id="loginBox">
+<input id="l_id" placeholder="ای میل / فون / کوڈ">
+<input id="l_pass" type="password" placeholder="پاس ورڈ">
+<button class="btn" onclick="loginNow()">لاگ ان کریں</button>
 </div>
 
-<div class="product" style="text-align:center">
-<h3>آرڈر فارم</h3>
-<input id="name" placeholder="آپ کا نام">
-<input id="phone" placeholder="فون نمبر">
-<input id="address" placeholder="مکمل پتہ">
-<input id="jazz" placeholder="جاز کیش نمبر (ادائیگی کے لیے)">
-<button class="btn btn-green" onclick="placeOrder()">آرڈر کنفرم کریں</button>
-<button class="btn" style="background:white;color:black;border:1px solid black;margin-top:10px" onclick="copyLink()">🔗 لنک کاپی کریں</button>
-<p style="font-size:11px;margin-top:10px;word-break:break-all">https://sabitiltaf313.github.io/Umariltafstore23/</p>
-<a href="auth.html"><button class="btn" style="background:#eee;color:black">لاگ ان / سائن اپ</button></a>
-</div>
+<div id="signupBox" style="display:none">
+<input id="s_name" placeholder="پورا نام *">
+<input id="s_phone" placeholder="فون نمبر *">
+<input id="s_email" placeholder="ای میل *">
+<input id="s_pass" type="password" placeholder="پاس ورڈ *">
+<select id="s_role"><option value="customer">کسٹمر</option><option value="affiliate">ایفلی ایٹ</option></select>
+<button class="btn" style="background:#25D366" onclick="signupNow()">اکاؤنٹ بنائیں</button>
 </div>
 
-<div class="cart" id="cart">1 چیز کارٹ میں ہے</div>
+<p id="msg" style="color:green;font-weight:bold;margin-top:12px"></p>
+
+<div style="margin-top:20px;text-align:right;font-size:12px;color:gray">
+ایڈمن: admin / 12345 (صرف آپ کے لیے)
+</div>
+
+</div>
+</div>
 
 <script>
-let cartCount=0;
-function addToCart(p){
-cartCount++;
-document.getElementById('cart').style.display='block';
-document.getElementById('cart').innerText= p + ' کارٹ میں شامل ہو گیا';
-setTimeout(()=>{document.getElementById('cart').style.display='none'},2000);
+function showTab(t){
+ document.getElementById('loginBox').style.display = t==='login'?'block':'none';
+ document.getElementById('signupBox').style.display = t==='signup'?'block':'none';
+ document.getElementById('t1').classList.toggle('active', t==='login');
+ document.getElementById('t2').classList.toggle('active', t==='signup');
 }
-function placeOrder(){
-let n=document.getElementById('name').value;
-if(n==""){alert('نام لکھیں');return;}
-alert('شکریہ '+n+'! آپ کا 1600 والا آرڈر موصول ہو گیا۔');
+
+function signupNow(){
+ let name = document.getElementById('s_name').value.trim();
+ let phone = document.getElementById('s_phone').value.trim();
+ let email = document.getElementById('s_email').value.trim();
+ let pass = document.getElementById('s_pass').value.trim();
+ let role = document.getElementById('s_role').value;
+ 
+ if(!name || !phone || !email || !pass){
+   alert('براہ کرم تمام خانے پُر کریں');
+   return;
+ }
+ 
+ let users = JSON.parse(localStorage.getItem('users') || '[]');
+ if(users.find(u=>u.email===email)){
+   alert('یہ ای میل پہلے سے موجود ہے');
+   return;
+ }
+ 
+ let code = 'AFF' + Math.floor(Math.random()*9000+1000);
+ users.push({name, phone, email, pass, role, code});
+ localStorage.setItem('users', JSON.stringify(users));
+ 
+ document.getElementById('msg').innerText = 'مبارک ہو! اکاؤنٹ بن گیا۔ کوڈ: ' + code + ' اب لاگ ان کریں';
+ showTab('login');
+ document.getElementById('l_id').value = email;
 }
-function copyLink(){
-navigator.clipboard.writeText('https://sabitiltaf313.github.io/Umariltafstore23/');
-alert('لنک کاپی ہو گیا!');
+
+function loginNow(){
+ let id = document.getElementById('l_id').value.trim();
+ let pass = document.getElementById('l_pass').value.trim();
+ 
+ if(id.toLowerCase() === 'admin' && pass === '12345'){
+   document.getElementById('msg').innerText = 'ایڈمن لاگ ان کامیاب! ایڈمن پینل کھل رہا ہے...';
+   localStorage.setItem('isAdmin','true');
+   setTimeout(()=>{ window.location.href = window.location.pathname + '?admin=true'; }, 500);
+   return;
+ }
+ 
+ let users = JSON.parse(localStorage.getItem('users') || '[]');
+ let found = users.find(u => (u.email===id || u.phone===id || u.code===id) && u.pass===pass);
+ 
+ if(found){
+   document.getElementById('msg').innerText = 'خوش آمدید ' + found.name;
+   localStorage.setItem('currentUser', JSON.stringify(found));
+ } else {
+   alert('ای میل یا پاس ورڈ غلط ہے');
+ }
 }
 </script>
 </body>
